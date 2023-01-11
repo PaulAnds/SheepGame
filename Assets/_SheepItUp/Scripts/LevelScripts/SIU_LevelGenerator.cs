@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SIU_LevelGenerator : MonoBehaviour
 {
@@ -51,6 +52,12 @@ public class SIU_LevelGenerator : MonoBehaviour
             if(i == 0){
                 lastPosition = _newPlatform.transform.position;
                 
+                Vector3 _temp = lastPosition;
+
+                _temp.y += 0.1f;
+
+                Instantiate(playerPrefab,_temp,Quaternion.identity);
+
                 continue;
             }
 
@@ -69,8 +76,9 @@ public class SIU_LevelGenerator : MonoBehaviour
             if(i < 25){
                 float _endPosY = _newPlatform.transform.position.y;
 
-                _newPlatform.transform.position = new Vector3(_newPlatform.transform.position.x, _newPlatform.transform.y - blockHeight * 3f, _newPlatform.transform.position.z);
-                
+                _newPlatform.transform.position = new Vector3(_newPlatform.transform.position.x, _newPlatform.transform.position.y - blockHeight * 3f, _newPlatform.transform.position.z);
+
+                _newPlatform.transform.DOLocalMoveY(_endPosY,0.3f).SetDelay(i * 0.1f);   
             }
         }
     }
